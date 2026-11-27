@@ -35,6 +35,12 @@ import { messagesHandler } from './handlers/messagesHandler';
 import { imageEditsHandler } from './handlers/imageEditsHandler';
 import { messagesCountTokensHandler } from './handlers/messagesCountTokensHandler';
 import modelResponsesHandler from './handlers/modelResponsesHandler';
+import {
+  canvaCreateDesignHandler,
+  canvaGetTemplatesHandler,
+  canvaGetDesignHandler,
+  canvaListDesignsHandler,
+} from './handlers/canvaHandler';
 
 // utils
 import { logger } from './apm';
@@ -279,6 +285,15 @@ app.post('/v1/prompts/*', requestValidator, (c) => {
 if (runtime === 'workerd') {
   app.get('/v1/realtime', realTimeHandler);
 }
+
+/**
+ * Canva API routes
+ * Design templates, creation, and metadata management
+ */
+app.post('/v1/canva/designs', canvaCreateDesignHandler);
+app.post('/v1/canva/designs/templates', canvaGetTemplatesHandler);
+app.get('/v1/canva/designs/:designId', canvaGetDesignHandler);
+app.get('/v1/canva/designs', canvaListDesignsHandler);
 
 /**
  * @deprecated
